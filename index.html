@@ -1,639 +1,1183 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Fusca Legacy: Edição Interatividade Máxima</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
-    <style>
-        /* =================================================================== */
-        /* THE FUSCA LEGACY: CSS - EDIÇÃO RESPONSIVIDADE TOTAL (Mobile-First) */
-        /* =================================================================== */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Fusca Legacy: Edição Interatividade Máxima</title>
 
-        /* === TEMA CLARO: Variáveis de Cor === */
-        :root {
-            --bg-color: #f4f4f4;
-            --surface-color: #ffffff;
-            --text-color: #333333;
-            --subtle-text-color: #777777;
-            --border-color: #dddddd;
-            --accent-color: #0077c2;
-            --glow-color: rgba(0, 119, 194, 0.5);
-            --font-heading: 'Oswald', sans-serif;
-            --font-body: 'Roboto', sans-serif;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=Roboto:wght@300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
 
-        /* === ESTILOS BASE (MOBILE-FIRST) === */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-        body {
-            height: 100%; width: 100%;
-            overflow-y: hidden; overflow-x: hidden;
-            background-color: var(--bg-color);
-            font-family: var(--font-body);
-            color: var(--text-color);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+  <style>
+    /* =================================================================== */
+    /* THE FUSCA LEGACY: CSS - EDIÇÃO RESPONSIVIDADE TOTAL (Mobile-First) */
+    /* =================================================================== */
 
-        /* --- Tela de Ignição --- */
-        #ignition-screen {
-            position: fixed; z-index: 100; top: 0; left: 0;
-            width: 100%; height: 100%; background: var(--bg-color);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: opacity 0.5s ease-out;
-        }
-        #key-container { text-align: center; }
-        #car-key {
-            height: 100px;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
-            animation: key-float 3s infinite ease-in-out;
-        }
-        #ignition-screen p { font-family: var(--font-heading); font-size: 1.2rem; letter-spacing: 2px; color: var(--subtle-text-color); }
-        @keyframes key-float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+    /* === TEMA CLARO: Variáveis de Cor === */
+    :root {
+      --bg-color: #f4f4f4;
+      --surface-color: #ffffff;
+      --text-color: #333333;
+      --subtle-text-color: #777777;
+      --border-color: #dddddd;
+      --accent-color: #0077c2;
+      --glow-color: rgba(0, 119, 194, 0.5);
+      --font-heading: 'Oswald', sans-serif;
+      --font-body: 'Roboto', sans-serif;
+    }
 
-        /* --- ATO 1: PAINEL (DESIGN MOBILE) --- */
-        .hidden { opacity: 0; pointer-events: none; }
-        #experience-container { transition: opacity 1s ease-in; }
-        #windshield {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: #333 url('https://images.unsplash.com/photo-1533613220915-609f661a2fe1?q=80&w=2070') center center/cover;
-        }
-        .windshield-view {
-            position: absolute; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            transition: opacity 1.5s ease-in-out;
-            opacity: 0;
-        }
-        #view-default { opacity: 1; }
-        #view-era50 { background-image: url('./imagens/fusca-1.jpg'); filter: grayscale(1) sepia(0.3); }
-        #view-era70 { background-image: url('./imagens/fusca.jpeg'); filter: saturate(1.5); }
-        #view-era90 { background-image: url('./imagens/fundo-policia.jpg'); }
+    /* === ESTILOS BASE (MOBILE-FIRST) === */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      background-color: var(--bg-color);
+      font-family: var(--font-body);
+      color: var(--text-color);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
+    /* --- Tela de Ignição --- */
+    #ignition-screen {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: opacity 0.5s ease-out;
+    }
+    #key-container {
+      text-align: center;
+    }
+    #car-key {
+      height: 100px;
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      animation: key-float 3s infinite ease-in-out;
+    }
+    #ignition-screen p {
+      font-family: var(--font-heading);
+      font-size: 1.2rem;
+      letter-spacing: 2px;
+      color: var(--subtle-text-color);
+    }
+    @keyframes key-float {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
 
-        #dashboard {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: auto;
-            background: linear-gradient(to top, var(--surface-color), #e8e8e8);
-            border-top: 1px solid var(--border-color);
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-        }
+    /* --- ATO 1: PAINEL (DESIGN MOBILE) --- */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #experience-container {
+      transition: opacity 1s ease-in;
+    }
+    #windshield {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #333 url('https://images.unsplash.com/photo-1533613220915-609f661a2fe1?q=80&w=2070') center center/cover;
+    }
+    .windshield-view {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 1.5s ease-in-out;
+      opacity: 0;
+    }
+    #view-default {
+      opacity: 1;
+    }
+    #view-era50 {
+      background-image: url('./imagens/fusca-1.jpg');
+      filter: grayscale(1) sepia(0.3);
+    }
+    #view-era70 {
+      background-image: url('./imagens/fusca.jpeg');
+      filter: saturate(1.5);
+    }
+    #view-era90 {
+      background-image: url('./imagens/fundo-policia.jpg');
+    }
 
-        #steering-wheel { display: none; }
+    #dashboard {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: auto;
+      background: linear-gradient(to top, var(--surface-color), #e8e8e8);
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .instrument-cluster {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .panel-instrument {
-            padding: 10px;
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            text-align: center;
-        }
-        .instrument-title { font-size: 0.7rem; letter-spacing: 1px; color: var(--subtle-text-color); margin-bottom: 5px; font-family: var(--font-heading); }
-        #hodometer-display, #radio-display { font-size: 1.2rem; }
-        #radio-buttons { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
-        .radio-btn { padding: 8px; font-size: 0.8rem; border: 1px solid #ccc; border-radius: 5px; background: #e0e0e0; color: #555; cursor: pointer; transition: all 0.1s ease-in-out; box-shadow: 0 3px 0 #bbb, 0 4px 5px rgba(0,0,0,0.1); }
-        .radio-btn:active, .radio-btn.active {transform: translateY(2px); box-shadow: 0 1px 0 #bbb;}
-        .radio-btn.active {background: var(--accent-color); color: #fff; border-color: var(--accent-color);}
+    /* === Ajuste responsivo para telas muito pequenas (até 300px) === */
+    @media (max-width: 300px) {
+      #steering-wheel {
+        display: block;
+        position: relative;
+        margin-top: 50px;
+        width: 180px;
+        height: auto;
+      }
+      #steering-wheel img {
+        max-width: 100%;
+        height: auto;
+      }
+      #horn-btn {
+        position: absolute;
+        top: 45%;
+        left: 45%;
+        width: 40px;
+        height: 40px;
+        background: rgba(0, 0, 0, 0.3);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      #ficha-btn {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+      }
+    }
 
-        #glove-box-handle, #headlight-btn { height: 40px; font-size: 1.2rem; background-image: linear-gradient(to top, #cccccc, #ffffff, #cccccc); border: 1px solid #bbb; border-radius: 5px; color: #333; cursor: pointer; transition: all 0.1s; box-shadow: 0 3px 0 #aaa, 0 4px 5px rgba(0,0,0,0.1);}
-        #glove-box-handle:active, #headlight-btn:active {transform: translateY(2px); box-shadow: 0 1px 0 #aaa;}
-        #headlight-btn.active {color: var(--accent-color); box-shadow: 0 1px 0 #aaa, inset 0 0 10px var(--glow-color);}
-        body.night-mode #radio-display {color: var(--accent-color); text-shadow: 0 0 10px var(--glow-color);}
+    .instrument-cluster {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .panel-instrument {
+      padding: 10px;
+      background: var(--surface-color);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    .instrument-title {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      color: var(--subtle-text-color);
+      margin-bottom: 5px;
+      font-family: var(--font-heading);
+    }
+    #hodometer-display,
+    #radio-display {
+      font-size: 1.2rem;
+    }
+    #radio-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 5px;
+    }
+    .radio-btn {
+      padding: 8px;
+      font-size: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #e0e0e0;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      box-shadow: 0 3px 0 #bbb, 0 4px 5px rgba(0, 0, 0, 0.1);
+    }
+    .radio-btn:active,
+    .radio-btn.active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #bbb;
+    }
+    .radio-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: var(--accent-color);
+    }
 
-        #logbook-trigger, #explore-museum-btn {
-            position: relative;
-            width: 100%;
-            margin: 5px 0;
-            padding: 12px;
-            font-size: 1rem;
-            bottom: auto; left: auto; right: auto; transform: none;
-            order: 10;
-            cursor: pointer;
-            border-radius: 50px;
-            border: 1px solid var(--accent-color);
-            background: var(--surface-color);
-            color: var(--accent-color);
-        }
-        #explore-museum-btn { background: var(--accent-color); color: #fff; }
+    #glove-box-handle,
+    #headlight-btn {
+      height: 40px;
+      font-size: 1.2rem;
+      background-image: linear-gradient(to top, #cccccc, #ffffff, #cccccc);
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.1s;
+      box-shadow: 0 3px 0 #aaa, 0 4px 5px rgba(0, 0, 0, 0.1);
+    }
+    #glove-box-handle:active,
+    #headlight-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #aaa;
+    }
+    #headlight-btn.active {
+      color: var(--accent-color);
+      box-shadow: 0 1px 0 #aaa, inset 0 0 10px var(--glow-color);
+    }
+    body.night-mode #radio-display {
+      color: var(--accent-color);
+      text-shadow: 0 0 10px var(--glow-color);
+    }
 
-        #content-overlay {
-            position: fixed; top: 10%; left: 50%;
-            transform: translateX(-50%);
-            width: 90%; max-width: 600px;
-            padding: 20px;
-            background: rgba(255,255,255,0.5);
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            backdrop-filter: blur(5px);
-        }
-        .era-content { transition: opacity 0.5s; opacity: 0; display: none; }
-        .era-content.visible { display: block; opacity: 1; }
-        .era-content h2 { color: var(--accent-color); margin-bottom: 10px; font-family: var(--font-heading); }
-        .era-content p { font-family: 'Roboto', sans-serif; font-weight: 300; line-height: 1.6; }
+    #logbook-trigger,
+    #explore-museum-btn {
+      position: relative;
+      width: 100%;
+      margin: 5px 0;
+      padding: 12px;
+      font-size: 1rem;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      transform: none;
+      order: 10;
+      cursor: pointer;
+      border-radius: 50px;
+      border: 1px solid var(--accent-color);
+      background: var(--surface-color);
+      color: var(--accent-color);
+    }
+    #explore-museum-btn {
+      background: var(--accent-color);
+      color: #fff;
+    }
 
-        /* --- ATO 2: MUSEU (DESIGN MOBILE) --- */
-        #museum {
-            background: var(--surface-color); color: var(--text-color);
-            transition: opacity 1s ease-in;
-        }
-        .museum-intro {
-            height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background-color: var(--bg-color);
-        }
-        .museum-intro h1 { font-size: clamp(2rem, 10vw, 3.5rem); font-family: var(--font-heading); }
-        .museum-section { padding: 80px 5%; }
-        .museum-section h2 { font-size: clamp(1.8rem, 8vw, 3rem); margin-bottom: 40px; font-family: var(--font-heading); text-align: center; text-transform: uppercase; }
+    #content-overlay {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    .era-content {
+      transition: opacity 0.5s;
+      opacity: 0;
+      display: none;
+    }
+    .era-content.visible {
+      display: block;
+      opacity: 1;
+    }
+    .era-content h2 {
+      color: var(--accent-color);
+      margin-bottom: 10px;
+      font-family: var(--font-heading);
+    }
+    .era-content p {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+    }
 
-        .card-grid { display: grid; grid-template-columns: 1fr; gap: 30px; perspective: 1000px; }
-        .story-card { aspect-ratio: 3/4; }
-        .card-inner {
-            position: relative; width: 100%; height: 100%;
-            border-radius: 20px; overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.8s, box-shadow 0.8s;
-        }
-        .card-bg {
-            position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
-            background-size: cover; background-position: center;
-            transform: translateZ(0px);
-            transition: transform 0.8s, filter 0.5s;
-            filter: grayscale(40%);
-        }
-        .card-content {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            padding: 30px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 20%, transparent);
-            transform: translateZ(50px);
-        }
-        .card-content h3 { color: #fff; font-family: var(--font-heading); font-size: 1.5rem; }
-        .card-details-btn {
-            position: absolute; top: 20px; right: 20px;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: #fff;
-            border: none;
-            font-size: 2rem;
-            line-height: 40px;
-            cursor: pointer;
-            transform: translateZ(60px);
-            animation: pulse-light 2.5s infinite;
-        }
-        @keyframes pulse-light {
-            0%, 100% { box-shadow: 0 0 10px var(--glow-color); }
-            50% { box-shadow: 0 0 25px var(--glow-color); }
-        }
+    /* --- ATO 2: MUSEU (DESIGN MOBILE) --- */
+    #museum {
+      background: var(--surface-color);
+      color: var(--text-color);
+      transition: opacity 1s ease-in;
+    }
+    .museum-intro {
+      height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background-color: var(--bg-color);
+    }
+    .museum-intro h1 {
+      font-size: clamp(2rem, 10vw, 3.5rem);
+      font-family: var(--font-heading);
+    }
+    .museum-section {
+      padding: 80px 5%;
+    }
+    .museum-section h2 {
+      font-size: clamp(1.8rem, 8vw, 3rem);
+      margin-bottom: 40px;
+      font-family: var(--font-heading);
+      text-align: center;
+      text-transform: uppercase;
+    }
 
-        .engine-container { position: relative; max-width: 800px; margin: 0 auto; }
-        .engine-image { width: 100%; }
-        .hotspot {
-            position: absolute; width: 30px; height: 30px;
-            border-radius: 50%; cursor: pointer;
-            background: var(--accent-color);
-            animation: pulse-hotspot 2s infinite;
-        }
-        .hotspot::before {content: '+'; color: #fff; font-size: 24px; font-weight: bold; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%);}
-        @keyframes pulse-hotspot {
-            0% { box-shadow: 0 0 0 0 var(--glow-color); }
-            70% { box-shadow: 0 0 0 15px rgba(0, 119, 194, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 119, 194, 0); }
-        }
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      perspective: 1000px;
+    }
+    .story-card {
+      aspect-ratio: 3/4;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      transform-style: preserve-3d;
+      transition: transform 0.8s, box-shadow 0.8s;
+    }
+    .card-bg {
+      position: absolute;
+      top: -20px;
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      background-size: cover;
+      background-position: center;
+      transform: translateZ(0);
+      transition: transform 0.8s, filter 0.5s;
+      filter: grayscale(40%);
+    }
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 30px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, transparent);
+      transform: translateZ(50px);
+    }
+    .card-content h3 {
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+    }
+    .card-details-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      font-size: 2rem;
+      line-height: 40px;
+      cursor: pointer;
+      transform: translateZ(60px);
+      animation: pulse-light 2.5s infinite;
+    }
+    @keyframes pulse-light {
+      0%,
+      100% {
+        box-shadow: 0 0 10px var(--glow-color);
+      }
+      50% {
+        box-shadow: 0 0 25px var(--glow-color);
+      }
+    }
 
-        .world-map-container { position: relative; max-width: 900px; margin: 0 auto; }
-        .map-image { width: 100%; filter: invert(0.1); }
-        .map-marker { position: absolute; cursor: pointer; }
-        .map-marker::after { content: ''; position: absolute; width: 20px; height: 20px; background: var(--accent-color); border-radius: 50%; border: 3px solid var(--glow-color); animation: pulse-hotspot 2s infinite; }
-        .map-marker span { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: #fff; color: #333; padding: 5px 10px; border-radius: 5px; white-space: nowrap; opacity: 0; transition: opacity 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
-        .map-marker:hover span { opacity: 1; }
+    .engine-container {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .engine-image {
+      width: 100%;
+    }
+    .hotspot {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      background: var(--accent-color);
+      animation: pulse-hotspot 2s infinite;
+    }
+    .hotspot::before {
+      content: '+';
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -52%);
+    }
+    @keyframes pulse-hotspot {
+      0% {
+        box-shadow: 0 0 0 0 var(--glow-color);
+      }
+      70% {
+        box-shadow: 0 0 0 15px rgba(0, 119, 194, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(0, 119, 194, 0);
+      }
+    }
 
-        .museum-footer { text-align: center; padding: 50px; background: #e0e0e0; color: #555; }
+    .world-map-container {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .map-image {
+      width: 100%;
+      filter: invert(0.1);
+    }
+    .map-marker {
+      position: absolute;
+      cursor: pointer;
+    }
+    .map-marker::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--accent-color);
+      border-radius: 50%;
+      border: 3px solid var(--glow-color);
+      animation: pulse-hotspot 2s infinite;
+    }
+    .map-marker span {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      color: #333;
+      padding: 5px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .map-marker:hover span {
+      opacity: 1;
+    }
 
-        .modal {
-            position: fixed; z-index: 200; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(5px);
-            display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.3s;
-        }
-        .modal-content, .lightbox-content {
-            background: var(--surface-color);
-            box-shadow: 0 10px 50px rgba(0,0,0,0.2);
-            border: 1px solid var(--border-color);
-            color: var(--text-color);
-            border-radius: 10px;
-            position: relative;
-            width: 90%;
-            max-width: 500px;
-        }
-        .close-button { position: absolute; top: 10px; right: 20px; font-size: 2rem; color: var(--subtle-text-color); cursor: pointer; }
+    .museum-footer {
+      text-align: center;
+      padding: 50px;
+      background: #e0e0e0;
+      color: #555;
+    }
 
-        .lightbox-content { flex-direction: column; max-width: 900px; }
-        #lightbox-img { max-height: 40vh; width: 100%; object-fit: cover; border-top-left-radius: 10px; border-top-right-radius: 10px; }
-        .lightbox-text { padding: 30px; }
-        .lightbox-text h3 { color: var(--accent-color); font-family: var(--font-heading); }
+    .modal {
+      position: fixed;
+      z-index: 200;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(5px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s;
+    }
+    .modal-content,
+    .lightbox-content {
+      background: var(--surface-color);
+      box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 10px;
+      position: relative;
+      width: 90%;
+      max-width: 500px;
+    }
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 2rem;
+      color: var(--subtle-text-color);
+      cursor: pointer;
+    }
 
-        /* =================================================================== */
-        /* === ESTILOS PARA TABLET E DESKTOP === */
-        /* =================================================================== */
-        @media (min-width: 450px) {
-            body::-webkit-scrollbar { width: 12px; }
-            body::-webkit-scrollbar-track { background: #e0e0e0; }
-            body::-webkit-scrollbar-thumb { background-color: var(--accent-color); border-radius: 20px; border: 3px solid #e0e0e0; }
+    .lightbox-content {
+      flex-direction: column;
+      max-width: 900px;
+    }
+    #lightbox-img {
+      max-height: 40vh;
+      width: 100%;
+      object-fit: cover;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    .lightbox-text {
+      padding: 30px;
+    }
+    .lightbox-text h3 {
+      color: var(--accent-color);
+      font-family: var(--font-heading);
+    }
 
-            #dashboard {
-                height: 250px; flex-direction: row; justify-content: center; align-items: center; padding: 0;
-            }
-            #steering-wheel {
-                display: block; position: absolute; bottom: 100px; left: 50%;
-                transform: translateX(-50%); width: 300px; height: 550px; z-index: 10;
-            }
-            .instrument-cluster {
-                display: flex; justify-content: space-between; width: 100%; max-width: 1200px; padding: 0 20px; gap: 20px; margin: 0;
-            }
-            .panel-instrument { flex-basis: auto; flex-grow: 1; max-width: 300px; padding: 15px; }
-            #hodometer-display, #radio-display { font-size: 1.5rem; }
-            .radio-btn { padding: 10px; font-size: 1rem; }
-            #glove-box-handle, #headlight-btn { height: 50px; font-size: 1.5rem; }
+    /* =================================================================== */
+    /* === ESTILOS PARA TABLET E DESKTOP === */
+    /* =================================================================== */
+    @media (min-width: 650px) {
+      body::-webkit-scrollbar {
+        width: 12px;
+      }
+      body::-webkit-scrollbar-track {
+        background: #e0e0e0;
+      }
+      body::-webkit-scrollbar-thumb {
+        background-color: var(--accent-color);
+        border-radius: 20px;
+        border: 3px solid #e0e0e0;
+      }
 
-            #logbook-trigger {
-                position: fixed; width: auto; bottom: 270px; right: 30px; padding: 10px 15px;
-            }
-            #explore-museum-btn {
-                position: fixed; width: auto; bottom: 270px; left: 50%;
-                transform: translateX(-50%); padding: 15px 30px; font-size: 1.2rem;
-            }
+      #dashboard {
+        height: 450px;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+      }
 
-            .card-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-            .story-card:hover .card-bg { transform: translateZ(0px) scale(1.1); filter: grayscale(0%); }
-            
-            .lightbox-content { flex-direction: row; }
-            #lightbox-img { max-height: 70vh; flex-basis: 60%; }
-            .lightbox-text { flex-basis: 40%; }
-        }
-    </style>
+      #steering-wheel {
+        display: block;
+        position: absolute;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 300px;
+        height: 350px;
+        z-index: 10;
+      }
+      .instrument-cluster {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 20px;
+        gap: 20px;
+        margin: 0;
+      }
+      .panel-instrument {
+        flex-basis: auto;
+        flex-grow: 1;
+        max-width: 300px;
+        padding: 15px;
+      }
+      #hodometer-display,
+      #radio-display {
+        font-size: 1.5rem;
+      }
+      .radio-btn {
+        padding: 10px;
+        font-size: 1rem;
+      }
+      #glove-box-handle,
+      #headlight-btn {
+        height: 50px;
+        font-size: 1.5rem;
+      }
+
+      #logbook-trigger {
+        position: fixed;
+        width: auto;
+        bottom: 270px;
+        right: 30px;
+        padding: 10px 15px;
+      }
+      #explore-museum-btn {
+        position: fixed;
+        width: auto;
+        bottom: 270px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 15px 30px;
+        font-size: 1.2rem;
+      }
+      #ficha-btn {
+        position: fixed;
+        width: auto;
+        bottom: 270px;
+        left: 30px;
+        padding: 10px 15px;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+      .story-card:hover .card-bg {
+        transform: translateZ(0) scale(1.1);
+        filter: grayscale(0%);
+      }
+
+      .lightbox-content {
+        flex-direction: row;
+      }
+      #lightbox-img {
+        max-height: 70vh;
+        flex-basis: 60%;
+      }
+      .lightbox-text {
+        flex-basis: 40%;
+      }
+    }
+
+    /* Botão de Ficha Técnica */
+    #ficha-btn {
+      display: inline-block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 12px 20px;
+      font-size: 1rem;
+      font-family: var(--font-heading);
+      text-decoration: none;
+      color: var(--text-color);
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-radius: 30px;
+      position: relative;
+      order: 10;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    #ficha-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    }
+    #ficha-btn:active {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(1px);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    }
+  </style>
 </head>
 <body>
+  <div id="ignition-screen">
+    <div id="key-container">
+      <img src="./imagens/CHAVE.png" alt="Chave do Carro" id="car-key" />
+      <p>Gire a chave para começar.</p>
+    </div>
+  </div>./sound/car-start-and-driving-away-2-31339.mp3
 
-    <div id="ignition-screen">
-        <div id="key-container">
-            <img src="./imagens/CHAVE.png" alt="Chave do Carro" id="car-key">
-            <p>Gire a chave para começar.</p>
-        </div>
-    </div>./sound/car-start-and-driving-away-2-31339.mp3
-
-    <div id="experience-container" class="hidden">
-        <div id="windshield">
-            <div class="windshield-view" id="view-default"></div>
-            <div class="windshield-view" id="view-era50"></div>
-            <div class="windshield-view" id="view-era70"></div>
-            <div class="windshield-view" id="view-era90"></div>
-        </div>
-
-        <div id="dashboard">
-            <div id="steering-wheel">
-                <button class="radio-btn"><a href="ficha_tecnica.html"><h1>Ficha Técnica</h1></a></button>
-            </div>
-
-            <div class="instrument-cluster">
-                <div id="radio" class="panel-instrument">
-                    <div class="instrument-title">RÁDIO</div>
-                    <div id="radio-display">FM <span id="station-display">--.--</span></div>
-                    <div id="radio-buttons">
-                        <button class="radio-btn" data-era="era50" data-station="59.0"><span>50's</span></button>
-                        <button class="radio-btn" data-era="era70" data-station="75.0"><span>70's</span></button>
-                        <button class="radio-btn" data-era="era90" data-station="93.0"><span>90's</span></button>
-                    </div>
-                </div>
-
-                <div id="glove-box" class="panel-instrument">
-                    <div class="instrument-title">PORTA-LUVAS</div>
-                    <button id="glove-box-handle" aria-label="Abrir Porta-Luvas"><i class="fa-solid fa-car-side"></i></button>
-                </div>
-
-                <div id="hodometer" class="panel-instrument">
-                    <div class="instrument-title">HODÔMETRO</div>
-                    <div id="hodometer-display">0000</div>
-                    <span>km</span>
-                </div>
-                
-                <div id="headlight-switch" class="panel-instrument">
-                    <div class="instrument-title">FARÓIS</div>
-                    <button id="headlight-btn" aria-label="Acender Faróis"><i class="fa-solid fa-lightbulb"></i></button>
-                </div>
-            </div>
-
-            <button id="explore-museum-btn" class="hidden">
-                <i class="fa-solid fa-archway"></i>
-                Explorar o Museu
-            </button>
-        </div>
-        
-        <div id="content-overlay">
-            <div class="era-content" id="era50-content">
-                <h2>Anos Dourados (50/60)</h2>
-                <p>O Fusca chega ao Brasil, conquista as ruas e se torna um símbolo de modernidade e acesso. A produção nacional em São Bernardo do Campo solidifica seu lugar no coração do país.</p>
-            </div>
-            <div class="era-content" id="era70-content">
-                <h2>Era Pop (70/80)</h2>
-                <p>No auge de sua popularidade, o "Fuscão" é uma estrela. Personalizado por jovens e imortalizado no cinema por "Herbie", ele era a cara da liberdade e da cultura pop vibrante da época.</p>
-            </div>
-            <div class="era-content" id="era90-content">
-                <h2>O Legado (90+)</h2>
-                <p>Após uma breve despedida, ele retorna como o "Fusca Itamar", um clássico renascido. Mesmo após o fim de sua produção, o mito vive, mais forte do que nunca, em clubes e garagens de colecionadores.</p>
-            </div>
-        </div>
-        
-        <div id="logbook-trigger" class="hidden">
-             <i class="fa-solid fa-book-journal-whills"></i>
-             <span>Diário de Bordo</span>
-        </div>
+  <div id="experience-container" class="hidden">
+    <div id="windshield">
+      <div class="windshield-view" id="view-default"></div>
+      <div class="windshield-view" id="view-era50"></div>
+      <div class="windshield-view" id="view-era70"></div>
+      <div class="windshield-view" id="view-era90"></div>
     </div>
 
-    <main id="museum" class="hidden">
-        <section class="museum-intro">
-            <h1>Bem-vindo ao Museu do Legado</h1>
-            <p>Você chegou. Agora, explore as alas que contam a história de uma lenda automotiva.</p>
-        </section>
+    <div id="dashboard">
+      <div id="steering-wheel">
+        <img src="./imagens/volante.png" alt="Volante" width="300" />
+        <button id="horn-btn" aria-label="Buzina"></button>
+      </div>
 
-        <section class="museum-section" id="legends-hall">
-            <h2 data-aos="fade-up">Hall das Lendas</h2>
-            <div class="card-grid">
-                <div class="story-card" data-aos="fade-up" data-title="A Estrela de Hollywood" data-text="Herbie, o 'Fusca de corrida', conquistou corações em 'Se Meu Fusca Falasse', provando que o carisma do carro ia muito além das ruas." data-img="https://cdn.motor1.com/images/mgl/zxxAV/s3/herbie-the-love-bug-1963-volkswagen-beetle.jpg">
-                    <div class="card-inner">
-                        <div class="card-bg" style="background-image: url('./imagens/fusca-1.jpg');"></div>
-                        <div class="card-content"><h3>A Estrela de Hollywood</h3> <button class="card-details-btn">+</button></div>
-                    </div>
-                </div>
-                <div class="story-card" data-aos="fade-up" data-aos-delay="100" data-title="O Rei do Deserto" data-text="Modificado para corridas off-road, o 'Baja Bug' mostrou a incrível versatilidade e robustez do chassi Fusca nos terrenos mais difíceis." data-img="https://i.ytimg.com/vi/u4_813uTAFA/maxresdefault.jpg">
-                    <div class="card-inner">
-                        <div class="card-bg" style="background-image: url('./imagens/fundo-policia.jpg');"></div>
-                        <div class="card-content"><h3>O Rei do Deserto</h3> <button class="card-details-btn">+</button></div>
-                    </div>
-                </div>
-                <div class="story-card" data-aos="fade-up" data-aos-delay="200" data-title="A Despedida Final" data-text="A 'Última Edición', produzida no México em 2003, marcou o fim de uma era com um modelo nostálgico que celebrava sua longa história." data-img="https://quatrorodas.abril.com.br/wp-content/uploads/2020/08/QR-719-fusca-ultima-edicion-11-e1678122826760.jpg?quality=70&strip=info">
-                    <div class="card-inner">
-                        <div class="card-bg" style="background-image: url('./imagens/fusca.jpeg?quality=70&strip=info');"></div>
-                        <div class="card-content"><h3>A Despedida Final</h3> <button class="card-details-btn">+</button></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section class="museum-section" id="engine-bay">
-            <h2 data-aos="fade-up">Coração Valente: O Motor Boxer</h2>
-            <div class="engine-container" data-aos="zoom-in">
-                <img src="https://i.pinimg.com/originals/de/69/2b/de692b1a8ac730b9d5f75e1140502157.png" alt="Motor do Fusca" class="engine-image">
-                <div class="hotspot" style="top: 45%; left: 48%;" data-title="Carburador" data-text="A peça responsável pela mistura de ar e combustível. A simplicidade do carburador do Fusca era uma de suas maiores virtudes."></div>
-                <div class="hotspot" style="top: 20%; left: 55%;" data-title="Ventoinha (A 'Capela')" data-text="Essencial para a refrigeração a ar. Puxava o ar frio para resfriar as aletas do motor, garantindo seu funcionamento em qualquer clima."></div>
-                <div class="hotspot" style="top: 55%; left: 25%;" data-title="Dínamo/Alternador" data-text="Gerava a energia elétrica para a bateria e todo o sistema do carro. Um componente robusto e de fácil manutenção."></div>
-            </div>
-        </section>
-
-        <section class="museum-section" id="world-map">
-            <h2 data-aos="fade-up">Um Ícone Global</h2>
-            <div class="world-map-container" data-aos="zoom-in">
-                <img src="https://svgsilh.com/svg/306338.svg" alt="Mapa do Mundo" class="map-image">
-                <div class="map-marker" style="top: 35%; left: 48%;" data-country="germany"><span>Alemanha</span></div>
-                <div class="map-marker" style="top: 68%; left: 35%;" data-country="brazil"><span>Brasil</span></div>
-                <div class="map-marker" style="top: 48%; left: 18%;" data-country="mexico"><span>México</span></div>
-            </div>
-        </section>
-        
-        <footer class="museum-footer">
-            <p>A jornada nunca termina. O Legado continua.</p>
-        </footer>
-    </main>
-
-    <div id="fun-fact-modal" class="modal hidden">...</div>
-    <div id="logbook-modal" class="modal hidden">...</div>
-    <div id="map-modal" class="modal hidden">...</div>
-
-    <div id="lightbox-modal" class="modal hidden">
-        <div class="lightbox-content">
-            <span class="close-button">&times;</span>
-            <img id="lightbox-img" src="" alt="Imagem em destaque">
-            <div class="lightbox-text">
-                <h3 id="lightbox-title"></h3>
-                <p id="lightbox-p"></p>
-            </div>
+      <div class="instrument-cluster">
+        <div id="radio" class="panel-instrument">
+          <div class="instrument-title">RÁDIO</div>
+          <div id="radio-display">
+            FM <span id="station-display">--.--</span>
+          </div>
+          <div id="radio-buttons">
+            <button class="radio-btn" data-era="era50" data-station="59.0"><span>50's</span></button>
+            <button class="radio-btn" data-era="era70" data-station="75.0"><span>70's</span></button>
+            <button class="radio-btn" data-era="era90" data-station="93.0"><span>90's</span></button>
+          </div>
         </div>
+
+        <div id="glove-box" class="panel-instrument">
+          <div class="instrument-title">PORTA-LUVAS</div>
+          <button id="glove-box-handle" aria-label="Abrir Porta-Luvas">
+            <i class="fa-solid fa-car-side"></i>
+          </button>
+        </div>
+
+        <div id="hodometer" class="panel-instrument">
+          <div class="instrument-title">HODÔMETRO</div>
+          <div id="hodometer-display">0000</div>
+          <span>km</span>
+        </div>
+
+        <div id="headlight-switch" class="panel-instrument">
+          <div class="instrument-title">FARÓIS</div>
+          <button id="headlight-btn" aria-label="Acender Faróis">
+            <i class="fa-solid fa-lightbulb"></i>
+          </button>
+        </div>
+      </div>
+
+      <a id="ficha-btn" href="ficha_tecnica.html">Ficha Técnica</a>
+
+      <button id="explore-museum-btn" class="hidden">
+        <i class="fa-solid fa-archway"></i> Explorar o Museu
+      </button>
     </div>
 
-    <audio id="sound-engine-start" src="./sond/car-engine-30745.mp3" preload="auto"></audio>
-    <audio id="sound-engine-stop" src="https://www.myinstants.com/media/sounds/car-engine-shut-off.mp3" preload="auto"></audio>
-    <audio id="sound-door-open" src="https://www.myinstants.com/media/sounds/car-door-open-sound-effect.mp3" preload="auto"></audio>
-    <audio id="sound-click" src="https://www.myinstants.com/media/sounds/mouse-click-153941.mp3" preload="auto"></audio>
-    <audio id="sound-horn" src="https://www.myinstants.com/media/sounds/car-horn-sound-effect-hd.mp3" preload="auto"></audio>
-    <audio id="music-era50" src="./sond/punk-rock-guitar-loop-278767.mp3" loop preload="auto"></audio>
-    <audio id="music-era70" src="./sond/heavy-metal-rock-riff-135795.mp3" loop preload="auto"></audio>
-    <audio id="music-era90" src="./sond/rock-of-joy-197159.mp3" loop preload="auto"></audio>
-    
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
+    <div id="content-overlay">
+      <div class="era-content" id="era50-content">
+        <h2>Anos Dourados (50/60)</h2>
+        <p>
+          O Fusca chega ao Brasil, conquista as ruas e se torna um símbolo de
+          modernidade e acesso. A produção nacional em São Bernardo do Campo
+          solidifica seu lugar no coração do país.
+        </p>
+      </div>
+      <div class="era-content" id="era70-content">
+        <h2>Era Pop (70/80)</h2>
+        <p>
+          No auge de sua popularidade, o "Fuscão" é uma estrela. Personalizado
+          por jovens e imortalizado no cinema por "Herbie", ele era a cara da
+          liberdade e da cultura pop vibrante da época.
+        </p>
+      </div>
+      <div class="era-content" id="era90-content">
+        <h2>O Legado (90+)</h2>
+        <p>
+          Após uma breve despedida, ele retorna como o "Fusca Itamar", um
+          clássico renascido. Mesmo após o fim de sua produção, o mito vive,
+          mais forte do que nunca, em clubes e garagens de colecionadores.
+        </p>
+      </div>
+    </div>
 
-            // --- SELETORES DOS ELEMENTOS ---
-            const body = document.body;
-            const ignitionScreen = document.getElementById('ignition-screen');
-            const experienceContainer = document.getElementById('experience-container');
-            const carKey = document.getElementById('car-key');
-            const radioButtons = document.querySelectorAll('.radio-btn');
-            const stationDisplay = document.getElementById('station-display');
-            const gloveBoxHandle = document.getElementById('glove-box-handle');
-            const funFactModal = document.getElementById('fun-fact-modal');
-            const funFactText = document.getElementById('fun-fact-text');
-            const hodometerDisplay = document.getElementById('hodometer-display');
-            const logbookTrigger = document.getElementById('logbook-trigger');
-            const logbookModal = document.getElementById('logbook-modal');
-            const logbookSummary = document.getElementById('logbook-summary');
-            const exploreMuseumBtn = document.getElementById('explore-museum-btn');
-            const museumSection = document.getElementById('museum');
-            const hornBtn = document.getElementById('horn-btn');
-            const headlightBtn = document.getElementById('headlight-btn');
-            const lightboxModal = document.getElementById('lightbox-modal');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxTitle = document.getElementById('lightbox-title');
-            const lightboxP = document.getElementById('lightbox-p');
-            const storyCards = document.querySelectorAll('.story-card');
-            const engineHotspots = document.querySelectorAll('.hotspot');
-            const mapMarkers = document.querySelectorAll('.map-marker');
-            const mapModal = document.getElementById('map-modal');
-            const mapModalTitle = document.getElementById('map-modal-title');
-            const mapModalText = document.getElementById('map-modal-text');
+    <div id="logbook-trigger" class="hidden">
+      <i class="fa-solid fa-book-journal-whills"></i>
+      <span>Diário de Bordo</span>
+    </div>
+  </div>
 
-            // --- ÁUDIO ---
-            const sounds = {
-                engineStart: document.getElementById('sound-engine-start'),
-                engineStop: document.getElementById('sound-engine-stop'),
-                doorOpen: document.getElementById('sound-door-open'),
-                click: document.getElementById('sound-click'),
-                horn: document.getElementById('sound-horn'),
-            };
-            const music = {
-                era50: document.getElementById('music-era50'),
-                era70: document.getElementById('music-era70'),
-                era90: document.getElementById('music-era90'),
-            };
+  <main id="museum" class="hidden">
+    <section class="museum-intro">
+      <h1>Bem-vindo ao Museu do Legado</h1>
+      <p>
+        Você chegou. Agora, explore as alas que contam a história de uma lenda
+        automotiva.
+      </p>
+    </section>
 
-            // --- ESTADO DA EXPERIÊNCIA ---
-            const state = {
-                currentEra: null,
-                visitedEras: new Set(),
-                hodometer: 0,
-                totalEras: radioButtons.length
-            };
+    <section class="museum-section" id="legends-hall">
+      <h2 data-aos="fade-up">Hall das Lendas</h2>
+      <div class="card-grid">
+        <div
+          class="story-card"
+          data-aos="fade-up"
+          data-title="A Estrela de Hollywood"
+          data-text="Herbie, o 'Fusca de corrida', conquistou corações em 'Se Meu Fusca Falasse', provando que o carisma do carro ia muito além das ruas."
+          data-img="https://cdn.motor1.com/images/mgl/zxxAV/s3/herbie-the-love-bug-1963-volkswagen-beetle.jpg"
+        >
+          <div class="card-inner">
+            <div
+              class="card-bg"
+              style="background-image: url('./imagens/fusca-1.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3>A Estrela de Hollywood</h3>
+              <button class="card-details-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="story-card"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-title="O Rei do Deserto"
+          data-text="Modificado para corridas off-road, o 'Baja Bug' mostrou a incrível versatilidade e robustez do chassi Fusca nos terrenos mais difíceis."
+          data-img="https://i.ytimg.com/vi/u4_813uTAFA/maxresdefault.jpg"
+        >
+          <div class="card-inner">
+            <div
+              class="card-bg"
+              style="background-image: url('./imagens/fundo-policia.jpg')"
+            ></div>
+            <div class="card-content">
+              <h3>O Rei do Deserto</h3>
+              <button class="card-details-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="story-card"
+          data-aos="fade-up"
+          data-aos-delay="200"
+          data-title="A Despedida Final"
+          data-text="A 'Última Edición', produzida no México em 2003, marcou o fim de uma era com um modelo nostálgico que celebrava sua longa história."
+          data-img="https://quatrorodas.abril.com.br/wp-content/uploads/2020/08/QR-719-fusca-ultima-edicion-11-e1678122826760.jpg?quality=70&strip=info"
+        >
+          <div class="card-inner">
+            <div
+              class="card-bg"
+              style="background-image: url('./imagens/fusca.jpeg?quality=70&strip=info')"
+            ></div>
+            <div class="card-content">
+              <h3>A Despedida Final</h3>
+              <button class="card-details-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            const funFacts = ["O design do Fusca foi inspirado em um besouro, criado para ter máxima eficiência aerodinâmica na época.", "Mais de 21 milhões de unidades do Fusca original foram produzidas.", "No México, o Fusca ('Vocho') foi usado como táxi oficial por décadas.", "O último Fusca 'clássico' foi produzido no México em 2003.", "O motor traseiro refrigerado a ar era tão robusto que podia funcionar em qualquer clima."];
-            const countryData = {
-                germany: { title: "Alemanha: O Berço", text: "Onde tudo começou. Conhecido como 'Käfer' (Besouro), foi projetado por Ferdinand Porsche e se tornou um símbolo da reconstrução alemã no pós-guerra." },
-                brazil: { title: "Brasil: A Segunda Casa", text: "Chamado carinhosamente de 'Fusca', foi o carro mais vendido por 24 anos seguidos. Sua robustez e simplicidade o tornaram perfeito para as estradas do país." },
-                mexico: { title: "México: O Guerreiro", text: "Conhecido como 'Vocho', foi um verdadeiro guerreiro das ruas, servindo como táxi na Cidade do México por décadas. Foi o último país a parar sua produção, em 2003." }
-            };
+    <section class="museum-section" id="engine-bay">
+      <h2 data-aos="fade-up">Coração Valente: O Motor Boxer</h2>
+      <div class="engine-container" data-aos="zoom-in">
+        <img
+          src="https://i.pinimg.com/originals/de/69/2b/de692b1a8ac730b9d5f75e1140502157.png"
+          alt="Motor do Fusca"
+          class="engine-image"
+        />
+        <div
+          class="hotspot"
+          style="top: 45%; left: 48%"
+          data-title="Carburador"
+          data-text="A peça responsável pela mistura de ar e combustível. A simplicidade do carburador do Fusca era uma de suas maiores virtudes."
+        ></div>
+        <div
+          class="hotspot"
+          style="top: 20%; left: 55%"
+          data-title="Ventoinha (A 'Capela')"
+          data-text="Essencial para a refrigeração a ar. Puxava o ar frio para resfriar as aletas do motor, garantindo seu funcionamento em qualquer clima."
+        ></div>
+        <div
+          class="hotspot"
+          style="top: 55%; left: 25%"
+          data-title="Dínamo/Alternador"
+          data-text="Gerava a energia elétrica para a bateria e todo o sistema do carro. Um componente robusto e de fácil manutenção."
+        ></div>
+      </div>
+    </section>
 
-            // --- FUNÇÕES ---
-            function playSound(sound) {
-                if(sound) {
-                    sound.currentTime = 1;
-                    sound.play().catch(e => console.log("Erro ao tocar som:", e));
-                }
-            }
+    <section class="museum-section" id="world-map">
+      <h2 data-aos="fade-up">Um Ícone Global</h2>
+      <div class="world-map-container" data-aos="zoom-in">
+        <img
+          src="https://svgsilh.com/svg/306338.svg"
+          alt="Mapa do Mundo"
+          class="map-image"
+        />
+        <div
+          class="map-marker"
+          style="top: 35%; left: 48%"
+          data-country="germany"
+        >
+          <span>Alemanha</span>
+        </div>
+        <div
+          class="map-marker"
+          style="top: 68%; left: 35%"
+          data-country="brazil"
+        >
+          <span>Brasil</span>
+        </div>
+        <div
+          class="map-marker"
+          style="top: 48%; left: 18%"
+          data-country="mexico"
+        >
+          <span>México</span>
+        </div>
+      </div>
+    </section>
 
-            function startExperience() {
-                playSound(sounds.engineStart);
-                ignitionScreen.classList.add('hidden');
-                experienceContainer.classList.remove('hidden');
-            }
+    <footer class="museum-footer">
+      <p>A jornada nunca termina. O Legado continua.</p>
+    </footer>
+  </main>
 
-            function changeEra(era) {
-                if (state.currentEra === era) return;
-                playSound(sounds.click);
-                Object.values(music).forEach(track => track.pause());
-                if (state.currentEra) {
-                    document.getElementById(`${state.currentEra}-content`).classList.remove('visible');
-                    document.getElementById(`view-${state.currentEra}`).style.opacity = 0;
-                }
-                state.currentEra = era;
-                state.visitedEras.add(era);
-                document.getElementById(`${era}-content`).classList.add('visible');
-                document.getElementById(`view-${era}`).style.opacity = 1;
-                if (music[era]) { music[era].currentTime = 0; music[era].play(); }
-                radioButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.era === era);
-                    if (btn.dataset.era === era) { stationDisplay.textContent = btn.dataset.station; }
-                });
-                updateHodometer(150);
-                checkLogbookUnlock();
-            }
+  <div id="fun-fact-modal" class="modal hidden">...</div>
+  <div id="logbook-modal" class="modal hidden">...</div>
+  <div id="map-modal" class="modal hidden">...</div>
 
-            function showFunFact() { playSound(sounds.click); const randomIndex = Math.floor(Math.random() * funFacts.length); funFactText.textContent = funFacts[randomIndex]; funFactModal.classList.remove('hidden'); updateHodometer(50); }
-            function updateHodometer(km) { state.hodometer += km; hodometerDisplay.textContent = String(state.hodometer).padStart(4, '0'); }
-            function checkLogbookUnlock() { if (state.visitedEras.size === state.totalEras) { logbookTrigger.classList.remove('hidden'); exploreMuseumBtn.classList.remove('hidden'); }}
-            function showLogbook() { playSound(sounds.click); logbookSummary.innerHTML = ''; state.visitedEras.forEach(era => { const eraName = document.querySelector(`[data-era=${era}]`).textContent; const li = document.createElement('li'); li.innerHTML = `<i class="fa-solid fa-road"></i> Você viajou pela era dos <strong>${eraName}</strong>.`; logbookSummary.appendChild(li); }); logbookModal.classList.remove('hidden'); }
-            function toggleHeadlights() { playSound(sounds.click); document.body.classList.toggle('night-mode'); headlightBtn.classList.toggle('active'); }
-            
-            function transitionToMuseum() {
-                playSound(sounds.engineStop);
-                if (state.currentEra && music[state.currentEra]) { music[state.currentEra].pause(); }
-                experienceContainer.style.transition = 'opacity 0.5s ease-out';
-                experienceContainer.classList.add('hidden');
-                setTimeout(() => {
-                    playSound(sounds.doorOpen);
-                    body.style.overflowY = 'auto';
-                    museumSection.classList.remove('hidden');
-                    AOS.init({ duration: 800, once: true, offset: 100 });
-                    museumSection.scrollIntoView({ behavior: 'smooth' });
-                }, 500);
-            }
+  <div id="lightbox-modal" class="modal hidden">
+    <div class="lightbox-content">
+      <span class="close-button">&times;</span>
+      <img id="lightbox-img" src="" alt="Imagem em destaque" />
+      <div class="lightbox-text">
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-p"></p>
+      </div>
+    </div>
+  </div>
 
-            function handleCardMouseMove(e) { /* ... (efeito 3D desativado no mobile por CSS, mas a função pode permanecer) ... */ }
-            function handleCardMouseLeave() { /* ... */ }
+  <audio id="sound-engine-start" src="./sond/car-engine-30745.mp3" preload="auto"></audio>
+  <audio id="sound-engine-stop" src="https://www.myinstants.com/media/sounds/car-engine-shut-off.mp3" preload="auto"></audio>
+  <audio id="sound-door-open" src="https://www.myinstants.com/media/sounds/car-door-open-sound-effect.mp3" preload="auto"></audio>
+  <audio id="sound-click" src="https://www.myinstants.com/media/sounds/mouse-click-153941.mp3" preload="auto"></audio>
+  <audio id="sound-horn" src="https://www.myinstants.com/media/sounds/car-horn-sound-effect-hd.mp3" preload="auto"></audio>
+  <audio id="music-era50" src="./sond/punk-rock-guitar-loop-278767.mp3" loop preload="auto"></audio>
+  <audio id="music-era70" src="./sond/heavy-metal-rock-riff-135795.mp3" loop preload="auto"></audio>
+  <audio id="music-era90" src="./sond/rock-of-joy-197159.mp3" loop preload="auto"></audio>
 
-            function showMapInfo(e) {
-                const countryId = e.currentTarget.dataset.country;
-                const data = countryData[countryId];
-                if (!data) return;
-                playSound(sounds.click);
-                mapModalTitle.textContent = data.title;
-                mapModalText.textContent = data.text;
-                mapModal.classList.remove('hidden');
-            }
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // --- SELETORES DOS ELEMENTOS ---
+      const body = document.body;
+      const ignitionScreen = document.getElementById('ignition-screen');
+      const experienceContainer = document.getElementById('experience-container');
+      const carKey = document.getElementById('car-key');
+      const radioButtons = document.querySelectorAll('.radio-btn');
+      const stationDisplay = document.getElementById('station-display');
+      const gloveBoxHandle = document.getElementById('glove-box-handle');
+      const funFactModal = document.getElementById('fun-fact-modal');
+      const funFactText = document.getElementById('fun-fact-text');
+      const hodometerDisplay = document.getElementById('hodometer-display');
+      const logbookTrigger = document.getElementById('logbook-trigger');
+      const logbookModal = document.getElementById('logbook-modal');
+      const logbookSummary = document.getElementById('logbook-summary');
+      const exploreMuseumBtn = document.getElementById('explore-museum-btn');
+      const museumSection = document.getElementById('museum');
+      const hornBtn = document.getElementById('horn-btn');
+      const headlightBtn = document.getElementById('headlight-btn');
+      const lightboxModal = document.getElementById('lightbox-modal');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxTitle = document.getElementById('lightbox-title');
+      const lightboxP = document.getElementById('lightbox-p');
+      const storyCards = document.querySelectorAll('.story-card');
+      const engineHotspots = document.querySelectorAll('.hotspot');
+      const mapMarkers = document.querySelectorAll('.map-marker');
+      const mapModal = document.getElementById('map-modal');
+      const mapModalTitle = document.getElementById('map-modal-title');
+      const mapModalText = document.getElementById('map-modal-text');
 
-            function showLightbox(title, text, imgSrc) {
-                playSound(sounds.click);
-                lightboxTitle.textContent = title;
-                lightboxP.textContent = text;
-                lightboxImg.src = imgSrc;
-                lightboxModal.classList.remove('hidden');
-            }
+      // --- ÁUDIO ---
+      const sounds = {
+        engineStart: document.getElementById('sound-engine-start'),
+        engineStop: document.getElementById('sound-engine-stop'),
+        doorOpen: document.getElementById('sound-door-open'),
+        click: document.getElementById('sound-click'),
+        horn: document.getElementById('sound-horn'),
+      };
+      const music = {
+        era50: document.getElementById('music-era50'),
+        era70: document.getElementById('music-era70'),
+        era90: document.getElementById('music-era90'),
+      };
 
-            function closeModal() {
-                playSound(sounds.click);
-                document.querySelectorAll('.modal').forEach(modal => modal.classList.add('hidden'));
-            }
+      // --- ESTADO DA EXPERIÊNCIA ---
+      const state = {
+        currentEra: null,
+        visitedEras: new Set(),
+        hodometer: 0,
+        totalEras: radioButtons.length,
+      };
 
-            // --- EVENT LISTENERS ---
-            carKey.addEventListener('click', startExperience);
-            radioButtons.forEach(button => button.addEventListener('click', () => changeEra(button.dataset.era)));
-            gloveBoxHandle.addEventListener('click', showFunFact);
-            logbookTrigger.addEventListener('click', showLogbook);
-            exploreMuseumBtn.addEventListener('click', transitionToMuseum);
-            hornBtn.addEventListener('click', () => playSound(sounds.horn));
-            headlightBtn.addEventListener('click', toggleHeadlights);
-            
-            storyCards.forEach(card => {
-                if (window.matchMedia("(min-width: 769px)").matches) {
-                    card.addEventListener('mousemove', handleCardMouseMove);
-                    card.addEventListener('mouseleave', handleCardMouseLeave);
-                }
-                card.querySelector('.card-details-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    showLightbox(card.dataset.title, card.dataset.text, card.dataset.img);
-                });
-            });
+      const funFacts = [
+        'O design do Fusca foi inspirado em um besouro, criado para ter máxima eficiência aerodinâmica na época.',
+        'Mais de 21 milhões de unidades do Fusca original foram produzidas.',
+        "No México, o Fusca ('Vocho') foi usado como táxi oficial por décadas.",
+        "O último Fusca 'clássico' foi produzido no México em 2003.",
+        'O motor traseiro refrigerado a ar era tão robusto que podia funcionar em qualquer clima.',
+      ];
+      const countryData = {
+        germany: {
+          title: 'Alemanha: O Berço',
+          text: "Onde tudo começou. Conhecido como 'Käfer' (Besouro), foi projetado por Ferdinand Porsche e se tornou um símbolo da reconstrução alemã no pós-guerra.",
+        },
+        brazil: {
+          title: 'Brasil: A Segunda Casa',
+          text: "Chamado carinhosamente de 'Fusca', foi o carro mais vendido por 24 anos seguidos. Sua robustez e simplicidade o tornaram perfeito para as estradas do país.",
+        },
+        mexico: {
+          title: 'México: O Guerreiro',
+          text: "Conhecido como 'Vocho', foi um verdadeiro guerreiro das ruas, servindo como táxi na Cidade do México por décadas. Foi o último país a parar sua produção, em 2003.",
+        },
+      };
 
-            engineHotspots.forEach(hotspot => {
-                hotspot.addEventListener('click', (e) => {
-                    const container = e.currentTarget.closest('.engine-container');
-                    const imgSrc = container.querySelector('.engine-image').src;
-                    showLightbox(hotspot.dataset.title, hotspot.dataset.text, imgSrc);
-                });
-            });
+      // --- FUNÇÕES ---
+      function playSound(sound) {
+        if (sound) {
+          sound.currentTime = 1;
+          sound.play().catch((e) => console.log('Erro ao tocar som:', e));
+        }
+      }
 
-            mapMarkers.forEach(marker => marker.addEventListener('click', showMapInfo));
-            document.querySelectorAll('.close-button').forEach(button => button.addEventListener('click', closeModal));
+      function startExperience() {
+        playSound(sounds.engineStart);
+        ignitionScreen.classList.add('hidden');
+        experienceContainer.classList.remove('hidden');
+      }
+
+      function changeEra(era) {
+        if (state.currentEra === era) return;
+        playSound(sounds.click);
+        Object.values(music).forEach((track) => track.pause());
+        if (state.currentEra) {
+          document.getElementById(`${state.currentEra}-content`).classList.remove('visible');
+          document.getElementById(`view-${state.currentEra}`).style.opacity = 0;
+        }
+        state.currentEra = era;
+        state.visitedEras.add(era);
+        document.getElementById(`${era}-content`).classList.add('visible');
+        document.getElementById(`view-${era}`).style.opacity = 1;
+        if (music[era]) {
+          music[era].currentTime = 0;
+          music[era].play();
+        }
+        radioButtons.forEach((btn) => {
+          btn.classList.toggle('active', btn.dataset.era === era);
+          if (btn.dataset.era === era) {
+            stationDisplay.textContent = btn.dataset.station;
+          }
         });
-    </script>
+        updateHodometer(150);
+        checkLogbookUnlock();
+      }
+
+      function showFunFact() {
+        playSound(sounds.click);
+        const randomIndex = Math.floor(Math.random() * funFacts.length);
+        funFactText.textContent = funFacts[randomIndex];
+        funFactModal.classList.remove('hidden');
+        updateHodometer(50);
+      }
+      function updateHodometer(km) {
+        state.hodometer += km;
+        hodometerDisplay.textContent = String(state.hodometer).padStart(4, '0');
+      }
+      function checkLogbookUnlock() {
+        if (state.visitedEras.size === state.totalEras) {
+          logbookTrigger.classList.remove('hidden');
+          exploreMuseumBtn.classList.remove('hidden');
+        }
+      }
+      function showLogbook() {
+        playSound(sounds.click);
+        logbookSummary.innerHTML = '';
+        state.visitedEras.forEach((era) => {
+          const eraName = document.querySelector(`[data-era=${era}]`).textContent;
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fa-solid fa-road"></i> Você viajou pela era dos <strong>${eraName}</strong>.`;
+          logbookSummary.appendChild(li);
+        });
+        logbookModal.classList.remove('hidden');
+      }
+      function toggleHeadlights() {
+        playSound(sounds.click);
+        document.body.classList.toggle('night-mode');
+        headlightBtn.classList.toggle('active');
+      }
+
+      function transitionToMuseum() {
+        playSound(sounds.engineStop);
+        if (state.currentEra && music[state.currentEra]) {
+          music[state.currentEra].pause();
+        }
+        experienceContainer.style.transition = 'opacity 0.5s ease-out';
+        experienceContainer.classList.add('hidden');
+        setTimeout(() => {
+          playSound(sounds.doorOpen);
+          body.style.overflowY = 'auto';
+          museumSection.classList.remove('hidden');
+          AOS.init({ duration: 800, once: true, offset: 100 });
+          museumSection.scrollIntoView({ behavior: 'smooth' });
+        }, 500);
+      }
+
+      function handleCardMouseMove(e) {
+        /* ... */
+      }
+      function handleCardMouseLeave() {
+        /* ... */
+      }
+
+      function showMapInfo(e) {
+        const countryId = e.currentTarget.dataset.country;
+        const data = countryData[countryId];
+        if (!data) return;
+        playSound(sounds.click);
+        mapModalTitle.textContent = data.title;
+        mapModalText.textContent = data.text;
+        mapModal.classList.remove('hidden');
+      }
+
+      function showLightbox(title, text, imgSrc) {
+        playSound(sounds.click);
+        lightboxTitle.textContent = title;
+        lightboxP.textContent = text;
+        lightboxImg.src = imgSrc;
+        lightboxModal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        playSound(sounds.click);
+        document.querySelectorAll('.modal').forEach((modal) => modal.classList.add('hidden'));
+      }
+
+      // --- EVENT LISTENERS ---
+      carKey.addEventListener('click', startExperience);
+      radioButtons.forEach((button) =>
+        button.addEventListener('click', () => changeEra(button.dataset.era))
+      );
+      gloveBoxHandle.addEventListener('click', showFunFact);
+      logbookTrigger.addEventListener('click', showLogbook);
+      exploreMuseumBtn.addEventListener('click', transitionToMuseum);
+      hornBtn.addEventListener('click', () => playSound(sounds.horn));
+      headlightBtn.addEventListener('click', toggleHeadlights);
+
+      storyCards.forEach((card) => {
+        if (window.matchMedia('(min-width: 769px)').matches) {
+          card.addEventListener('mousemove', handleCardMouseMove);
+          card.addEventListener('mouseleave', handleCardMouseLeave);
+        }
+        card.querySelector('.card-details-btn').addEventListener('click', (e) => {
+          e.stopPropagation();
+          showLightbox(card.dataset.title, card.dataset.text, card.dataset.img);
+        });
+      });
+
+      engineHotspots.forEach((hotspot) => {
+        hotspot.addEventListener('click', (e) => {
+          const container = e.currentTarget.closest('.engine-container');
+          const imgSrc = container.querySelector('.engine-image').src;
+          showLightbox(hotspot.dataset.title, hotspot.dataset.text, imgSrc);
+        });
+      });
+
+      mapMarkers.forEach((marker) => marker.addEventListener('click', showMapInfo));
+      document.querySelectorAll('.close-button').forEach((button) =>
+        button.addEventListener('click', closeModal)
+      );
+    });
+  </script>
 </body>
 </html>
-
-
