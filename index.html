@@ -85,7 +85,7 @@
       position: relative; /* Para que a chave fique acima do vídeo */
       z-index: 1;
     }
- 
+
     #car-key {
       height: 100px;
       filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
@@ -135,16 +135,34 @@
     #view-default {
       opacity: 1;
     }
-    #view-era50 {
-      background-image: url('./imagens/fusca-1.jpg');
-      filter: grayscale(1) sepia(0.3);
+    /* #view-era50, #view-era70, #view-era90 não terão background-image CSS diretamente, mas sim um elemento <video> dentro */
+    /* REMOVIDO: #view-era50 { background-image: url('./sond/Fusca_Estacionando_com_Drift.mp4'); filter: grayscale(1) sepia(0.3); } */
+    /* REMOVIDO: #view-era70 { background-image: url('./imagens/fusca.jpeg'); filter: saturate(1.5); } */
+    /* REMOVIDO: #view-era90 { background-image: url('./imagens/fundo-policia.jpg'); } */
+
+    /* NOVO: Estilos para o container do vídeo de fundo do para-brisa */
+    .windshield-view.video-background-view {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* Importante para garantir que o vídeo não saia do container */
     }
-    #view-era70 {
-      background-image: url('./imagens/fusca.jpeg');
-      filter: saturate(1.5);
-    }
-    #view-era90 {
-      background-image: url('./imagens/fundo-policia.jpg');
+
+    /* NOVO: Estilo para o vídeo dentro do container do para-brisa */
+    .windshield-view.video-background-view .era-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover; /* Garante que o vídeo cubra toda a área */
+      /* Aplique filtros aqui se desejar para o vídeo da era */
+      filter: grayscale(1) sepia(0.3); /* Exemplo para era50 */
     }
 
     #dashboard {
@@ -376,6 +394,7 @@
       transform-style: preserve-3d;
       transition: transform 0.8s, box-shadow 0.8s;
     }
+    /* Mantenha .card-bg para cards com imagens estáticas */
     .card-bg {
       position: absolute;
       top: -20px;
@@ -387,7 +406,37 @@
       transform: translateZ(0);
       transition: transform 0.8s, filter 0.5s;
       filter: grayscale(40%);
+      z-index: 0; /* Garante que fica atrás do conteúdo */
     }
+
+    /* NOVO: Estilos para o vídeo de fundo do card */
+    .card-video-bg {
+      position: absolute;
+      top: -20px; /* Mesma posição de -20px que a imagem tinha para o efeito de "card-bg" */
+      left: -20px;
+      right: -20px;
+      bottom: -20px;
+      width: calc(100% + 40px); /* Ajuste para preencher os -20px de top/left/right/bottom */
+      height: calc(100% + 40px); /* Ajuste para preencher os -20px de top/left/right/bottom */
+      object-fit: cover; /* Garante que o vídeo cubra toda a área do card */
+      transform: translateZ(0);
+      transition: transform 0.8s, filter 0.5s;
+      filter: grayscale(40%); /* Seus filtros existentes */
+      z-index: 0; /* Certifique-se de que o vídeo fica atrás do conteúdo */
+    }
+
+    /* NOVO: Efeitos de hover para o vídeo de fundo do card */
+    .story-card:hover .card-video-bg {
+      transform: translateZ(0) scale(1.1);
+      filter: grayscale(0%); /* Remove o filtro no hover, assim como fazia com a imagem */
+    }
+
+    /* Manter o hover para cards com imagem (caso ainda haja) */
+    .story-card:hover .card-bg {
+      transform: translateZ(0) scale(1.1);
+      filter: grayscale(0%);
+    }
+
     .card-content {
       position: absolute;
       bottom: 0;
@@ -396,6 +445,7 @@
       padding: 30px;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 20%, transparent);
       transform: translateZ(50px);
+      z-index: 1; /* Garante que o conteúdo fique acima do vídeo/imagem */
     }
     .card-content h3 {
       color: #fff;
@@ -417,6 +467,7 @@
       cursor: pointer;
       transform: translateZ(60px);
       animation: pulse-light 2.5s infinite;
+      z-index: 2; /* Acima do conteúdo do card */
     }
     @keyframes pulse-light {
       0%,
@@ -658,10 +709,8 @@
       .card-grid {
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       }
-      .story-card:hover .card-bg {
-        transform: translateZ(0) scale(1.1);
-        filter: grayscale(0%);
-      }
+      /* Removido o seletor .card-bg aqui, pois o .card-video-bg já o substitui para vídeos */
+      /* E a regra geral para .card-bg e .card-video-bg já trata do hover para ambos */
 
       .lightbox-content {
         flex-direction: row;
@@ -718,13 +767,18 @@
       <img src="./imagens/CHAVE.png" alt="Chave do Carro" id="car-key" />
       <p>Gire a chave para começar.</p>
     </div>
-    <audio id="sond-ignition-start" src="./sond/car-engine-30745.mp3" preload="auto"></audio>
+    <audio id="sound-ignition-start" src="./sond/car-start-and-driving-away-2-31339.mp3" preload="auto"></audio>
   </div>
 
   <div id="experience-container" class="hidden">
     <div id="windshield">
       <div class="windshield-view" id="view-default"></div>
-      <div class="windshield-view" id="view-era50"></div>
+      <div class="windshield-view video-background-view" id="view-era50">
+        <video loop muted playsinline class="era-video" id="video-era50">
+          <source src="./sond/Fusca_Estacionando_com_Drift.mp4" type="video/mp4">
+          Seu navegador não suporta vídeos.
+        </video>
+      </div>
       <div class="windshield-view" id="view-era70"></div>
       <div class="windshield-view" id="view-era90"></div>
     </div>
@@ -826,10 +880,11 @@
           data-img="https://cdn.motor1.com/images/mgl/zxxAV/s3/herbie-the-love-bug-1963-volkswagen-beetle.jpg"
         >
           <div class="card-inner">
-            <div
-              class="card-bg"
-              style="background-image: url('./imagens/fusca-1.jpg')"
-            ></div>
+            <video loop muted playsinline class="card-video-bg" id="card-video-herbie">
+              <source src="./sond/Herbie_Video.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos.
+            </video>
+
             <div class="card-content">
               <h3>A Estrela de Hollywood</h3>
               <button class="card-details-btn">+</button>
@@ -943,9 +998,29 @@
     </footer>
   </main>
 
-  <div id="fun-fact-modal" class="modal hidden">...</div>
-  <div id="logbook-modal" class="modal hidden">...</div>
-  <div id="map-modal" class="modal hidden">...</div>
+  <div id="fun-fact-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Curiosidade do Fusca</h3>
+      <p id="fun-fact-text"></p>
+    </div>
+  </div>
+  
+  <div id="logbook-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3>Diário de Bordo</h3>
+      <ul id="logbook-summary"></ul>
+    </div>
+  </div>
+  
+  <div id="map-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h3 id="map-modal-title"></h3>
+      <p id="map-modal-text"></p>
+    </div>
+  </div>
 
   <div id="lightbox-modal" class="modal hidden">
     <div class="lightbox-content">
@@ -986,7 +1061,8 @@
       const logbookSummary = document.getElementById('logbook-summary');
       const exploreMuseumBtn = document.getElementById('explore-museum-btn');
       const museumSection = document.getElementById('museum');
-      const hornBtn = document.getElementById('horn-btn');
+      // Adicione o botão da buzina se ele existir no HTML ou comente esta linha
+      // const hornBtn = document.getElementById('horn-btn');
       const headlightBtn = document.getElementById('headlight-btn');
       const lightboxModal = document.getElementById('lightbox-modal');
       const lightboxImg = document.getElementById('lightbox-img');
@@ -999,15 +1075,21 @@
       const mapModalTitle = document.getElementById('map-modal-title');
       const mapModalText = document.getElementById('map-modal-text');
 
+      // NOVO: Seletores para os vídeos
+      const videoEra50 = document.getElementById('video-era50');
+      const cardVideoHerbie = document.getElementById('card-video-herbie');
+
+
       // --- ÁUDIO ---
       const sounds = {
-    engineStart: document.getElementById('sound-engine-start'),
-    engineStop: document.getElementById('sound-engine-stop'),
-    doorOpen: document.getElementById('sound-door-open'),
-    click: document.getElementById('sound-click'),
-    horn: document.getElementById('sound-horn'),
-    ignitionStart: document.getElementById('sound-ignition-start'), // ID do áudio da chave
-  };
+        engineStart: document.getElementById('sound-engine-start'),
+        engineStop: document.getElementById('sound-engine-stop'),
+        doorOpen: document.getElementById('sound-door-open'),
+        click: document.getElementById('sound-click'),
+        horn: document.getElementById('sound-horn'),
+        // Correção do ID: de 'sond-ignition-start' para 'sound-ignition-start'
+        ignitionStart: document.getElementById('sound-ignition-start'),
+      };
       const music = {
         era50: document.getElementById('music-era50'),
         era70: document.getElementById('music-era70'),
@@ -1046,29 +1128,40 @@
 
       // --- FUNÇÕES ---
       function playSound(sound) {
-    if (sound) {
-      sound.currentTime = 0; // Reinicia o som para ter certeza que vai tocar do início
-      sound.play().catch((e) => console.log('Erro ao tocar som:', e));
-    }
-  }
+        if (sound) {
+          sound.currentTime = 0; // Reinicia o som para ter certeza que vai tocar do início
+          sound.play().catch((e) => console.log('Erro ao tocar som:', e));
+        }
+      }
 
-  function startExperience() {
-    const ignitionVideo = document.getElementById('ignition-video');
+      function startExperience() {
+        const ignitionVideo = document.getElementById('ignition-video');
 
-    // Se o vídeo existe, tente reproduzi-lo (ele já está MUTADO pelo HTML)
-    if (ignitionVideo) {
-      // REMOVA ESTA LINHA: ignitionVideo.muted = false;
-      ignitionVideo.play().catch(e => console.log("Erro ao tentar tocar o vídeo:", e));
-    }
-    playSound(sounds.ignitionStart); // Isso vai tocar o som da ignição separado
-    ignitionScreen.classList.add('hidden');
-    experienceContainer.classList.remove('hidden');
-}
+        // O vídeo já está MUTADO pelo HTML, então apenas tente reproduzi-lo
+        if (ignitionVideo) {
+          ignitionVideo.play().catch(e => console.log("Erro ao tentar tocar o vídeo de ignição:", e));
+        }
+        playSound(sounds.ignitionStart); // Isso vai tocar o som da ignição separado
+        ignitionScreen.classList.add('hidden');
+        experienceContainer.classList.remove('hidden');
+      }
 
       function changeEra(era) {
         if (state.currentEra === era) return;
         playSound(sounds.click);
         Object.values(music).forEach((track) => track.pause());
+
+        // Pausar o vídeo da era anterior se houver
+        if (state.currentEra === 'era50' && videoEra50) {
+          videoEra50.pause();
+          videoEra50.currentTime = 0; // Opcional: reiniciar o vídeo ao pausar
+        }
+        // ********************************************
+        // Se você tiver mais vídeos para outras eras, adicione lógica similar aqui:
+        // Exemplo:
+        // if (state.currentEra === 'era70' && videoEra70) { videoEra70.pause(); videoEra70.currentTime = 0; }
+        // ********************************************
+
         if (state.currentEra) {
           document.getElementById(`${state.currentEra}-content`).classList.remove('visible');
           document.getElementById(`view-${state.currentEra}`).style.opacity = 0;
@@ -1077,6 +1170,24 @@
         state.visitedEras.add(era);
         document.getElementById(`${era}-content`).classList.add('visible');
         document.getElementById(`view-${era}`).style.opacity = 1;
+
+        // Reproduzir o vídeo da era 50 se for a era atual
+        if (era === 'era50' && videoEra50) {
+          // Garanta que o container da view-era50 está visível para que o vídeo seja reproduzido
+          document.getElementById(`view-${era}`).classList.add('video-background-view'); // Adiciona a classe
+          videoEra50.play().catch(e => console.error("Erro ao reproduzir vídeo da era 50:", e));
+        } else {
+           // Se não for era50, remove a classe para esconder o vídeo, se existir
+          document.getElementById(`view-${era}`).classList.remove('video-background-view'); 
+        }
+
+        // ********************************************
+        // Se você tiver mais vídeos para outras eras, adicione lógica similar aqui:
+        // Exemplo:
+        // if (era === 'era70' && videoEra70) { videoEra70.play().catch(e => console.error("Erro ao reproduzir vídeo da era 70:", e)); }
+        // ********************************************
+
+
         if (music[era]) {
           music[era].currentTime = 0;
           music[era].play();
@@ -1094,7 +1205,10 @@
       function showFunFact() {
         playSound(sounds.click);
         const randomIndex = Math.floor(Math.random() * funFacts.length);
-        funFactText.textContent = funFacts[randomIndex];
+        // O elemento funFactText pode não existir no HTML atual, adicione um <p id="fun-fact-text"></p> dentro de fun-fact-modal
+        if (funFactText) {
+          funFactText.textContent = funFacts[randomIndex];
+        }
         funFactModal.classList.remove('hidden');
         updateHodometer(50);
       }
@@ -1110,13 +1224,16 @@
       }
       function showLogbook() {
         playSound(sounds.click);
-        logbookSummary.innerHTML = '';
-        state.visitedEras.forEach((era) => {
-          const eraName = document.querySelector(`[data-era=${era}]`).textContent;
-          const li = document.createElement('li');
-          li.innerHTML = `<i class="fa-solid fa-road"></i> Você viajou pela era dos <strong>${eraName}</strong>.`;
-          logbookSummary.appendChild(li);
-        });
+        // Garante que logbookSummary existe (adicione <ul id="logbook-summary"></ul> dentro de logbook-modal)
+        if (logbookSummary) { 
+          logbookSummary.innerHTML = '';
+          state.visitedEras.forEach((era) => {
+            const eraName = document.querySelector(`[data-era=${era}]`).textContent;
+            const li = document.createElement('li');
+            li.innerHTML = `<i class="fa-solid fa-road"></i> Você viajou pela era dos <strong>${eraName}</strong>.`;
+            logbookSummary.appendChild(li);
+          });
+        }
         logbookModal.classList.remove('hidden');
       }
       function toggleHeadlights() {
@@ -1130,22 +1247,42 @@
         if (state.currentEra && music[state.currentEra]) {
           music[state.currentEra].pause();
         }
+        // Pausar o vídeo do para-brisa da era atual ao sair
+        if (state.currentEra === 'era50' && videoEra50) {
+            videoEra50.pause();
+            videoEra50.currentTime = 0;
+        }
+
         experienceContainer.style.transition = 'opacity 0.5s ease-out';
         experienceContainer.classList.add('hidden');
         setTimeout(() => {
           playSound(sounds.doorOpen);
-          body.style.overflowY = 'auto';
+          body.style.overflowY = 'auto'; // Habilita o scroll para o museu
           museumSection.classList.remove('hidden');
           AOS.init({ duration: 800, once: true, offset: 100 });
           museumSection.scrollIntoView({ behavior: 'smooth' });
+
+          // NOVO: Tentar iniciar a reprodução do vídeo do card Herbie
+          if (cardVideoHerbie) {
+            cardVideoHerbie.play().catch(e => console.error("Erro ao reproduzir vídeo do card Herbie:", e));
+          }
+
         }, 500);
       }
 
       function handleCardMouseMove(e) {
-        /* ... */
+        // Implementação do efeito 3D (se necessário)
+        const card = e.currentTarget;
+        const cardInner = card.querySelector('.card-inner');
+        const rect = card.getBoundingClientRect();
+        const xAxis = (rect.width / 2 - (e.clientX - rect.left)) / 25;
+        const yAxis = (e.clientY - rect.top - rect.height / 2) / 25;
+        cardInner.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg) translateZ(0)`;
       }
-      function handleCardMouseLeave() {
-        /* ... */
+      function handleCardMouseLeave(e) {
+        const card = e.currentTarget;
+        const cardInner = card.querySelector('.card-inner');
+        cardInner.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
       }
 
       function showMapInfo(e) {
@@ -1153,8 +1290,11 @@
         const data = countryData[countryId];
         if (!data) return;
         playSound(sounds.click);
-        mapModalTitle.textContent = data.title;
-        mapModalText.textContent = data.text;
+        // Garante que os elementos existem (<h3 id="map-modal-title"> e <p id="map-modal-text"> dentro de map-modal)
+        if (mapModalTitle && mapModalText) {
+          mapModalTitle.textContent = data.title;
+          mapModalText.textContent = data.text;
+        }
         mapModal.classList.remove('hidden');
       }
 
@@ -1179,10 +1319,12 @@
       gloveBoxHandle.addEventListener('click', showFunFact);
       logbookTrigger.addEventListener('click', showLogbook);
       exploreMuseumBtn.addEventListener('click', transitionToMuseum);
-      hornBtn.addEventListener('click', () => playSound(sounds.horn));
+      // Descomente esta linha se o botão da buzina for implementado no HTML
+      // if (hornBtn) { hornBtn.addEventListener('click', () => playSound(sounds.horn)); }
       headlightBtn.addEventListener('click', toggleHeadlights);
 
       storyCards.forEach((card) => {
+        // Aplica o efeito 3D apenas em telas maiores para melhor UX
         if (window.matchMedia('(min-width: 769px)').matches) {
           card.addEventListener('mousemove', handleCardMouseMove);
           card.addEventListener('mouseleave', handleCardMouseLeave);
@@ -1196,7 +1338,7 @@
       engineHotspots.forEach((hotspot) => {
         hotspot.addEventListener('click', (e) => {
           const container = e.currentTarget.closest('.engine-container');
-          const imgSrc = container.querySelector('.engine-image').src;
+          const imgSrc = container.querySelector('.engine-image').src; // Ou o hotspot.dataset.img se tiver um específico
           showLightbox(hotspot.dataset.title, hotspot.dataset.text, imgSrc);
         });
       });
@@ -1205,6 +1347,14 @@
       document.querySelectorAll('.close-button').forEach((button) =>
         button.addEventListener('click', closeModal)
       );
+
+      // NOVO: Adicione os elementos faltantes para os modais, se ainda não existirem
+      // O DOMContentLoaded já está rodando, então esses seletores devem encontrar os elementos.
+      // Se você não incluiu esses elementos no HTML, eles serão null.
+      // Certifique-se de que os seguintes IDs existem no seu HTML:
+      // <p id="fun-fact-text"></p> dentro de <div id="fun-fact-modal">
+      // <ul id="logbook-summary"></ul> dentro de <div id="logbook-modal">
+      // <h3 id="map-modal-title"></h3> e <p id="map-modal-text"></p> dentro de <div id="map-modal">
     });
   </script>
 </body>
