@@ -1053,15 +1053,15 @@
       }
 
       function startExperience() {
-        const ignitionVideo = document.getElementById('ignition-video');
-        if (ignitionVideo) {
-          ignitionVideo.muted = false; // Desmuta o vídeo ao interagir
-          ignitionVideo.play().catch(e => console.log("Erro ao tentar tocar o vídeo:", e));
-        }
-        playSound(sounds.ignitionStart); // Toca o som de ignição
-        ignitionScreen.classList.add('hidden');
-        experienceContainer.classList.remove('hidden');
-      }
+    const ignitionVideo = document.getElementById('ignition-video');
+    if (ignitionVideo) {
+      // A linha "ignitionVideo.muted = false;" foi removida daqui.
+      ignitionVideo.play().catch(e => console.log("Erro ao tentar tocar o vídeo:", e));
+    }
+    playSound(sounds.ignitionStart); // Isso vai tocar o som da ignição separado
+    ignitionScreen.classList.add('hidden');
+    experienceContainer.classList.remove('hidden');
+}
 
       function changeEra(era) {
         if (state.currentEra === era) return;
@@ -1207,3 +1207,4 @@
   </script>
 </body>
 </html>
+
