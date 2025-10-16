@@ -1001,13 +1001,13 @@
 
       // --- ÁUDIO ---
       const sounds = {
-        engineStart: document.getElementById('sound-engine-start'),
-        engineStop: document.getElementById('sound-engine-stop'),
-        doorOpen: document.getElementById('sound-door-open'),
-        click: document.getElementById('sound-click'),
-        horn: document.getElementById('sound-horn'),
-        ignitionStart: document.getElementById('sound-ignition-start'), // Adicionado o novo ID do áudio
-      };
+    engineStart: document.getElementById('sound-engine-start'),
+    engineStop: document.getElementById('sound-engine-stop'),
+    doorOpen: document.getElementById('sound-door-open'),
+    click: document.getElementById('sound-click'),
+    horn: document.getElementById('sound-horn'),
+    ignitionStart: document.getElementById('sound-ignition-start'), // ID do áudio da chave
+  };
       const music = {
         era50: document.getElementById('music-era50'),
         era70: document.getElementById('music-era70'),
@@ -1046,16 +1046,18 @@
 
       // --- FUNÇÕES ---
       function playSound(sound) {
-        if (sound) {
-          sound.currentTime = 1;
-          sound.play().catch((e) => console.log('Erro ao tocar som:', e));
-        }
-      }
+    if (sound) {
+      sound.currentTime = 0; // Reinicia o som para ter certeza que vai tocar do início
+      sound.play().catch((e) => console.log('Erro ao tocar som:', e));
+    }
+  }
 
-      function startExperience() {
+  function startExperience() {
     const ignitionVideo = document.getElementById('ignition-video');
+
+    // Se o vídeo existe, tente reproduzi-lo (ele já está MUTADO pelo HTML)
     if (ignitionVideo) {
-      // A linha "ignitionVideo.muted = false;" foi removida daqui.
+      // REMOVA ESTA LINHA: ignitionVideo.muted = false;
       ignitionVideo.play().catch(e => console.log("Erro ao tentar tocar o vídeo:", e));
     }
     playSound(sounds.ignitionStart); // Isso vai tocar o som da ignição separado
@@ -1207,4 +1209,3 @@
   </script>
 </body>
 </html>
-
