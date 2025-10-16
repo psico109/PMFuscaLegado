@@ -121,36 +121,46 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: #333 url('https://images.unsplash.com/photo-1533613220915-609f661a2fe1?q=80&w=2070') center center/cover;
+      background: #333; /* Fundo padrão caso não haja view ativa */
     }
     .windshield-view {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      transition: opacity 1.5s ease-in-out;
-      opacity: 0;
-    }
-    #view-default {
-      opacity: 1;
-    }
-    /* #view-era50, #view-era70, #view-era90 não terão background-image CSS diretamente, mas sim um elemento <video> dentro */
-    /* REMOVIDO: #view-era50 { background-image: url('./sond/Fusca_Estacionando_com_Drift.mp4'); filter: grayscale(1) sepia(0.3); } */
-    /* REMOVIDO: #view-era70 { background-image: url('./imagens/fusca.jpeg'); filter: saturate(1.5); } */
-    /* REMOVIDO: #view-era90 { background-image: url('./imagens/fundo-policia.jpg'); } */
-
-    /* NOVO: Estilos para o container do vídeo de fundo do para-brisa */
-    .windshield-view.video-background-view {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      overflow: hidden; /* Importante para garantir que o vídeo não saia do container */
+      background-size: cover; /* Faz a imagem cobrir todo o espaço */
+      background-position: center; /* Centraliza a imagem */
+      transition: opacity 1.5s ease-in-out;
+      opacity: 0;
+      overflow: hidden; /* Garante que nada transborde */
+    }
+    #view-default {
+      background-image: url('https://images.unsplash.com/photo-1533613220915-609f661a2fe1?q=80&w=2070'); /* Sua imagem padrão */
+      opacity: 1;
     }
 
-    /* NOVO: Estilo para o vídeo dentro do container do para-brisa */
+    /* NOVO: Estilos para as imagens de fundo das eras 70 e 90 */
+    #view-era70 {
+        background-image: url('./imagens/fusca-1.jpg');
+        filter: saturate(1.5); /* Mantenha seus filtros */
+    }
+    #view-era90 {
+        background-image: url('./imagens/fundo-policia.jpg');
+    }
+
+    /* Estilos para o container do vídeo de fundo do para-brisa (já existiam e estão corretos) */
+    .windshield-view.video-background-view {
+      /* Esses estilos já devem ser aplicados, mas apenas para garantir: */
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Estilo para o vídeo dentro do container do para-brisa (já existiam e estão corretos) */
     .windshield-view.video-background-view .era-video {
       position: absolute;
       top: 50%;
@@ -160,10 +170,10 @@
       width: auto;
       height: auto;
       transform: translate(-50%, -50%);
-      object-fit: cover; /* Garante que o vídeo cubra toda a área */
-      /* Aplique filtros aqui se desejar para o vídeo da era */
+      object-fit: cover;
       filter: grayscale(1) sepia(0.3); /* Exemplo para era50 */
     }
+    /* ... o restante do seu CSS ... */
 
     #dashboard {
       position: fixed;
@@ -779,8 +789,12 @@
           Seu navegador não suporta vídeos.
         </video>
       </div>
-      <div class="windshield-view" id="view-era70"></div>
-      <div class="windshield-view" id="view-era90"></div>
+      <div class="windshield-view" id="view-era70">
+        
+      </div>
+      <div class="windshield-view" id="view-era90">
+     
+      </div>
     </div>
 
     <div id="dashboard">
